@@ -1,0 +1,17 @@
+{
+  "name": "goodreads-random",
+  "version": "0.0.0",
+  "dependencies": {
+    "express": ">= 0.0.0",
+    "ejs": ">= 0.0.0",
+    "passport": ">= 0.0.0",
+    "passport-goodreads": ">= 0.0.0",
+    "sqlite3": ">= 0.0.0",
+    "memory-cache": ">= 0.0.0",
+    "express-session": >= 0.0.0",
+    "morgan": ">= 0.0.0",
+    "body-parser": ">= 0.0.0",
+    "cookie-parser": ">= 0.0.0",
+    "node-goodreads": "https://github.com/sillygwailo/node-goodreads/tarball/master"
+  }
+}
