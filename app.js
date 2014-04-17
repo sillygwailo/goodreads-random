@@ -12,6 +12,7 @@ var os = require('os')
 
 var GOODREADS_KEY = process.env.GOODREADS_KEY;
 var GOODREADS_SECRET = process.env.GOODREADS_SECRET;
+var CALLBACK_URL = process.env.CALLBACK_URL;
 
 var port = Number(process.env.PORT || 5000);
 
@@ -28,7 +29,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GoodreadsStrategy({
     consumerKey: GOODREADS_KEY,
     consumerSecret: GOODREADS_SECRET,
-    callbackURL: 'http://' + os.hostname() + ":" + port + "/auth/goodreads/callback"
+    callbackURL: CALLBACK_URL
   }, function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
