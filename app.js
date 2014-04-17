@@ -243,7 +243,9 @@ app.get('/logout', ensureAuthenticated,function(req, res) {
   }
 });
 
-app.listen(port);
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
