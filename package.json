@@ -6,7 +6,6 @@
     "ejs": ">= 0.0.0",
     "passport": ">= 0.0.0",
     "passport-goodreads": ">= 0.0.0",
-    "sqlite3": ">= 0.0.0",
     "memory-cache": ">= 0.0.0",
     "express-session": ">= 0.0.0",
     "morgan": ">= 0.0.0",
