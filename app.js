@@ -6,7 +6,6 @@ var express = require('express')
 var passport = require('passport')
   , GoodreadsStrategy = require('passport-goodreads').Strategy
   , goodreads = require('goodreads')
-//  , sqlite3 = require('sqlite3')
   , cache = require('memory-cache');
 var os = require('os')
   , util = require('util');
@@ -18,7 +17,6 @@ var port = Number(process.env.PORT || 5000);
 
 var gr = new goodreads.client({ key: GOODREADS_KEY, secret: GOODREADS_SECRET});
 
-// database = new sqlite3.Database('db/goodreads.db');
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -34,15 +32,6 @@ passport.use(new GoodreadsStrategy({
   }, function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      // database.each("SELECT uid, oauth_token, oauth_secret FROM user WHERE uid = " + profile.id, function(e, r) {
-      //   query = "UPDATE user set oauth_token = '" + accessToken + "' WHERE uid = " + profile.id;
-      //   database.run(query);
-      // }, function(e, r) {
-      //  if (r == 0) {
-      //    query = "INSERT INTO user values(" + profile.id + ", '" + accessToken + "');";
-      //    database.run(query);
-      //  }
-      // });
       return done(null, profile);
     });
   }
@@ -173,10 +162,6 @@ app.get('/', ensureAuthenticated, function(req, res){
     }
   }
   else { // not redirected from a POST, so just get the shelves and cache them
-    // database.each("SELECT uid, oauth_token, oauth_secret FROM user WHERE uid = " + profile.id, function(e, r) {
-    //   console.log(r);
-    //   use this function when the oauth_token is needed to make a call
-    // });
     gr.getShelves(profile.id, function(json) {
       if (json) {
         var shelvesArray = [];
