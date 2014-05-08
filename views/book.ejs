@@ -20,9 +20,11 @@
 	<body>
 <%- include form.ejs %>
   <div id="book">
+    <% if (typeof(book) != 'undefined') { %>
     <div class="cover"><a href="<%= book.link %>"><img src="<%= book.image_url %>"></a></div>
     <h2 class="title"><i><%= book.title %></i> by <%= book.authors[0].author[0].name %> </h2>
     <p class="description"><%- book.description %></p>
+    <% } else { %>This bookshelf is empty.<% } %>
   </div>
   <%- include footer.ejs %>
   
