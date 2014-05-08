@@ -122,14 +122,21 @@ app.post('/', ensureAuthenticated, function(req, res) {
     cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks);
     justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length - 1))];
     getAllShelves(profile.id, function(allShelves) {
+      if (req.body.shelves) { // give priority to data through a POST
+        shelf = req.body.shelves;
+      }
+      else {
+        shelf = req.session.shelf;
+      }
       req.session.book = {
-        shelf: req.body.shelves,
+        shelf: shelf,
         shelves: allShelves,
         submit: 'Get another book',
         book: justOneBook,
         user: req.user 
       }; // http://en.wikipedia.org/wiki/Post/Redirect/Get
-      req.session.book.redirected = true;
+      req.session.redirected = true;
+      req.session.shelf = req.body.shelves;
       res.redirect('/');    
     }); // getAllShelves
   }); // getAllBooks
@@ -139,9 +146,9 @@ app.get('/', ensureAuthenticated, function(req, res){
   var profile = {}
   profile.id = req.session.passport.user.id;
 
-  if (req.session.book) { // if redirected after a POST
-    if (req.session.book.redirected) {
-      delete req.session.book.redirected;
+  if (req.session.book) {
+    if (req.session.redirected) { // if redirected after a POST
+      req.session.redirected = null;
       res.render('book', req.session.book);
     }
     else { // GET after a POST, so just reload from the shelf stored in the session
@@ -150,8 +157,14 @@ app.get('/', ensureAuthenticated, function(req, res){
         differentBook = allBooks[Math.floor(Math.random() * (allBooks.length - 1))];
         
         getAllShelves(profile.id, function(allShelves) {
+          if (req.session.shelf) {
+            shelf = req.session.shelf;
+          }
+          else {
+            shelf = '';
+          }
           differentBookObj = {
-            shelf: req.body.shelves,
+            shelf: shelf,
             shelves: allShelves,
             submit: 'Get another book',
             book: differentBook,
@@ -170,9 +183,15 @@ app.get('/', ensureAuthenticated, function(req, res){
           shelvesArray.push(shelf.name[0]);
         });
         req.session.shelves = shelvesArray;
+        if (req.session.shelf) {
+          shelf = req.session.shelf;
+        }
+        else {
+          shelf = '';
+        }
         cache.put('shelves-' +  profile.id, shelvesArray, 300000);
         res.render('shelves', {
-          shelf: '',
+          shelf: shelf,
           submit: 'Get a book',
           shelves: shelvesArray,
           user: req.user
