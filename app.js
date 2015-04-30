@@ -45,10 +45,16 @@ var app = express();
 // configure Express
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(logger());
+app.use(logger('combined'));
 app.use(cookieParser());
-app.use(bodyParser());
-app.use(session({ secret: 'keyboard cat' }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(cookieParser('keyboard cat'));
 app.use(passport.initialize());
 app.use(passport.session());
