@@ -181,7 +181,7 @@ app.get('/', ensureAuthenticated, function(req, res){
       });
     }
   }
-  else { // not redirected from a POST, so just get the shelves and cache them
+  else { // not redirected from a POST, so get a book from 'currently-reading' shelf and cache the shelves list
     gr.getShelves(profile.id, function(json) {
       if (json) {
         var shelvesArray = [];
@@ -193,15 +193,33 @@ app.get('/', ensureAuthenticated, function(req, res){
           shelf = req.session.shelf;
         }
         else {
-          shelf = '';
+          shelf = 'currently-reading';
         }
         cache.put('shelves-' +  profile.id, shelvesArray, 300000);
-        res.render('shelves', {
-          shelf: shelf,
-          submit: 'Get a book',
-          shelves: shelvesArray,
-          user: req.user
-        });
+        getAllBooks(profile.id, 'currently-reading', 1, function renderOneBook(err, allBooks) {
+          justOneBook = {}
+          cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks);
+          justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length - 1))];
+          getAllShelves(profile.id, function(allShelves) {
+            if (req.body.shelves) { // give priority to data through a POST
+              shelf = req.body.shelves;
+            }
+            else if (req.session.shelf) {
+              shelf = req.session.shelf;
+            }
+            else {
+              shelf = 'currently-reading';
+            }
+            req.session.book = {
+              shelf: shelf,
+              shelves: allShelves,
+              submit: 'Get another book',
+              book: justOneBook,
+              user: req.user
+            }; // http://en.wikipedia.org/wiki/Post/Redirect/Get
+            res.render('book', req.session.book);
+          }); // getAllShelves
+        }); // getAllBooks
       }
     });
   } // else
