@@ -248,8 +248,12 @@ app.get('/auth/goodreads/callback',
 
 function clearCaches(caches, callback) {
   caches.forEach(function(cacheToDelete) {
-    cache.del(cacheToDelete);
-    console.log("Cache deleted: " . cacheToDelete);
+    if (cache.del(cacheToDelete)) {
+      console.log('Cache deleted: ' + cacheToDelete);
+    }
+    else {
+      console.log('No cache was stored for: ' + cacheToDelete);
+    }
   })
   callback();
 }
