@@ -18,7 +18,12 @@
             <% } %>
             <li><a href="http://justagwailo.com/contact">Contact</a></li>
             <% if (user) { %>
-            <li><a href="/logout">Logout</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button"><%= user.displayName %> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>  <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a target="_blank" href="<%= user._xml2js.user.link %>">Profile on Goodreads</a></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </li>
             <% } %>
           </ul>
         </div><!--/.nav-collapse -->
