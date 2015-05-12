@@ -234,6 +234,10 @@ app.get('/login', function(req, res){
   res.render('login', { user: req.user });
 });
 
+app.get('/about', function(req, res){
+  res.render('about', { user: req.user });
+});
+
 app.get('/auth/goodreads',
   passport.authenticate('goodreads'),
   function(req, res){
