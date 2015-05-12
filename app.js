@@ -58,7 +58,7 @@ app.use(session({
 app.use(cookieParser('keyboard cat'));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/assets'));
 
 function getAllShelves(userID, callback) {
   if (!cache.get('shelves-' + userID)) {

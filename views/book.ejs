@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
+    <%- include bootstrap_meta.ejs %>
 		<title>Random Goodreads book</title>
-    <style type="text/css">
-      #book {
-        padding: 15px;
-      }
-      ul {
-        list-style: none;
-      }
-      .cover {
-        float: left;
-        padding-right: 5px;
-        padding-bottom: 5px;
-      }
-    </style>
-	</head>
+    <%- include bootstrap_head.ejs %>
+  </head>
   
 	<body>
-<%- include form.ejs %>
+
+  <%- include bootstrap_start.ejs %>
+
+  <%- include form.ejs %>
   <div id="book">
     <% if (typeof(book) != 'undefined') { %>
     <div class="cover"><a href="<%= book.link %>"><img src="<%= book.image_url %>"></a></div>
@@ -26,7 +18,8 @@
     <p class="description"><%- book.description %></p>
     <% } else { %>This bookshelf is empty.<% } %>
   </div>
-  <%- include footer.ejs %>
-  
+
+  <%- include bootstrap_end.ejs %>
+
 </body>
 </html>
