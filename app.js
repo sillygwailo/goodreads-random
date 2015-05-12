@@ -230,6 +230,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 });
 
 app.get('/login', function(req, res){
+  if (req.isAuthenticated()) {  res.redirect('/') }
   res.render('login', { user: req.user });
 });
 
