@@ -1,6 +1,6 @@
 {
   "name": "goodreads-random",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "express": "4.12.3",
     "ejs": "2.3.1",
