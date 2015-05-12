@@ -10,8 +10,17 @@
         padding-right: 10px;
         padding-bottom: 5px;
       }
+      form .shelves { float: left; width: 50%; }
       @media screen and (max-width: 750px) {
         div.container.main { padding-top: 15%; }
+        form .shelves { float: left; width: 50%; }
+        form .shelves select { width: 75%; }
+        form input { width: 50%; }
+      }
+      @media screen and (min-width: 750px) {
+        form .shelves { float: left; width: 30%; }
+        form .shelves select { width: 75%; }
+        form input { width: 30%; }
       }
     </style>
     <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
