@@ -1,5 +1,5 @@
 <form action="/" method="post">
-<div class="shelves">Shelf: <select name="shelves"><% for(var i = 0; i < shelves.length; i++) { %>
+<div class="shelves"><label for="shelves">Shelf:</label> <select id="shelves" name="shelves"><% for(var i = 0; i < shelves.length; i++) { %>
     <option value="<%=shelves[i]%>"<% if (shelf == shelves[i] || (shelf == '' && shelves[i] == 'currently-reading' ) )  { %> selected<% } %>><%=shelves[i]%></option><% } %>
   </select></div>
   <input type="submit" value="<%=submit%>">
