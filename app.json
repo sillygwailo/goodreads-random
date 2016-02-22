@@ -1,0 +1,16 @@
+{
+  "name": "goodreads-random",
+  "description": "Pick a random book from one of your Goodreads shelves.",
+  "repository": "https://github.com/sillygwailo/goodreads-random",
+  "env": {
+      "GOODREADS_KEY": {
+        "description": "Goodreads developer key, available from https://www.goodreads.com/api/keys"
+      },
+      "GOODREADS_SECRET": {
+        "description": "Goodreads developer secret, available from https://www.goodreads.com/api/keys"
+      },
+      "CALLBACK_URL": {
+        "description": "Authentication callback URL. Example: http://localhost:5000/auth/goodreads/callback"
+      }
+  }
+}
