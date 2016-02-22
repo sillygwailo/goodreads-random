@@ -126,7 +126,7 @@ app.post('/', ensureAuthenticated, function(req, res) {
   getAllBooks(profile.id, req.body.shelves, 1, function renderOneBook(err, allBooks) {
     justOneBook = {}
     cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks);
-    justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length - 1))];
+    justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length))];
     getAllShelves(profile.id, function(allShelves) {
       if (req.body.shelves) { // give priority to data through a POST
         shelf = req.body.shelves;
@@ -160,7 +160,7 @@ app.get('/', ensureAuthenticated, function(req, res){
     else { // GET after a POST, so just reload from the shelf stored in the session
       getAllBooks(profile.id, req.session.book.shelf, 1, function renderOneBook(err, allBooks) {
         differentBook = {}
-        differentBook = allBooks[Math.floor(Math.random() * (allBooks.length - 1))];
+        differentBook = allBooks[Math.floor(Math.random() * (allBooks.length))];
         
         getAllShelves(profile.id, function(allShelves) {
           if (req.session.shelf) {
@@ -199,7 +199,7 @@ app.get('/', ensureAuthenticated, function(req, res){
         getAllBooks(profile.id, 'currently-reading', 1, function renderOneBook(err, allBooks) {
           justOneBook = {}
           cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks);
-          justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length - 1))];
+          justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length))];
           getAllShelves(profile.id, function(allShelves) {
             if (req.body.shelves) { // give priority to data through a POST
               shelf = req.body.shelves;
