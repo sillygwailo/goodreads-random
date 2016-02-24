@@ -2,7 +2,6 @@ var express = require('express')
   , cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
   , session = require('express-session')
-  , logger = require('morgan');
 var passport = require('passport')
   , GoodreadsStrategy = require('passport-goodreads').Strategy
   , goodreads = require('goodreads')
@@ -45,7 +44,6 @@ var app = express();
 // configure Express
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(logger('combined'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true
