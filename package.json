@@ -1,16 +1,15 @@
 {
   "name": "goodreads-random",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
-    "express": "4.12.3",
-    "ejs": "2.3.1",
-    "passport": "0.2.1",
-    "passport-goodreads": "0.1.2",
-    "memory-cache": "0.1.2",
-    "express-session": "1.11.1",
-    "morgan": "1.5.2",
-    "body-parser": "1.12.3",
-    "cookie-parser": "1.3.4",
-    "goodreads": "https://github.com/sillygwailo/node-goodreads/tarball/master"
+    "express": "4.13.4",
+    "ejs": "2.4.1",
+    "passport": "0.3.2",
+    "passport-goodreads": "1.0.0",
+    "memory-cache": "0.1.4",
+    "express-session": "1.13.0",
+    "body-parser": "1.15.0",
+    "cookie-parser": "1.4.1",
+    "goodreads": "0.0.4"
   }
 }
