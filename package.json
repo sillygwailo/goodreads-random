@@ -2,14 +2,14 @@
   "name": "goodreads-random",
   "version": "0.0.2",
   "dependencies": {
-    "express": "4.13.4",
-    "ejs": "2.4.1",
+    "express": "4.15.2",
+    "ejs": "2.5.6",
     "passport": "0.3.2",
     "passport-goodreads": "1.0.0",
-    "memory-cache": "0.1.4",
-    "express-session": "1.13.0",
-    "body-parser": "1.15.0",
-    "cookie-parser": "1.4.1",
-    "goodreads": "0.0.4"
+    "memory-cache": "0.1.6",
+    "express-session": "1.15.2",
+    "body-parser": "1.17.1",
+    "cookie-parser": "1.4.3",
+    "goodreads": "0.1.0"
   }
 }
