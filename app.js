@@ -153,7 +153,7 @@ app.get('/', ensureAuthenticated, function(req, res){
   if (req.session.book) {
     if (req.session.redirected) { // if redirected after a POST
       req.session.redirected = null;
-      res.render('book', removePlaceHolderCover(req.session.book));
+      res.render('book', makeUrlsHTTPS(removePlaceHolderCover(req.session.book)));
     }
     else { // GET after a POST, so just reload from the shelf stored in the session
       getAllBooks(profile.id, req.session.book.shelf, 1, function renderOneBook(err, allBooks) {
@@ -174,7 +174,7 @@ app.get('/', ensureAuthenticated, function(req, res){
             book: differentBook,
             user: req.user 
           }; // http://en.wikipedia.org/wiki/Post/Redirect/Get
-          res.render('book', removePlaceHolderCover(differentBookObj));
+          res.render('book', makeUrlsHTTPS(removePlaceHolderCover(differentBookObj)));
         }); // getAllShelves
       });
     }
@@ -215,7 +215,7 @@ app.get('/', ensureAuthenticated, function(req, res){
               book: justOneBook,
               user: req.user
             }; // http://en.wikipedia.org/wiki/Post/Redirect/Get
-            res.render('book', removePlaceHolderCover(req.session.book));
+            res.render('book', makeUrlsHTTPS(removePlaceHolderCover(req.session.book)));
           }); // getAllShelves
         }); // getAllBooks
       }
@@ -252,6 +252,14 @@ app.get('/auth/goodreads/callback',
 function removePlaceHolderCover(shelf) {
   if (shelf.book.image_url[0].indexOf('nophoto') > -1) {
     delete(shelf.book.image_url);
+  }
+  return shelf;
+}
+
+function makeUrlsHTTPS(shelf) {
+  shelf.book.link[0] = shelf.book.link[0].replace(/^http:\/\//i, 'https://');
+  if (typeof(shelf.book.image_url) != 'undefined') {
+    shelf.book.image_url[0] = shelf.book.image_url[0].replace(/^http:\/\//i, 'https://');
   }
   return shelf;
 }
