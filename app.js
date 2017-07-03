@@ -250,7 +250,7 @@ app.get('/auth/goodreads/callback',
   });
 
 function removePlaceHolderCover(shelf) {
-  if (shelf.book.image_url[0].indexOf('nophoto') > -1) {
+  if (typeof(shelf.book.image_url) != 'undefined' && shelf.book.image_url[0].indexOf('nophoto') > -1) {
     delete(shelf.book.image_url);
   }
   return shelf;
