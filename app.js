@@ -12,6 +12,7 @@ var os = require('os')
 var GOODREADS_KEY = process.env.GOODREADS_KEY;
 var GOODREADS_SECRET = process.env.GOODREADS_SECRET;
 var CALLBACK_URL = process.env.CALLBACK_URL;
+var CACHE_LIFETIME = process.env.CACHE_LIFETIME || 300000;
 
 var port = Number(process.env.PORT || 5000);
 
@@ -68,7 +69,7 @@ function getAllShelves(userID, callback) {
         json.GoodreadsResponse.shelves[0].user_shelf.forEach(function (shelf) {
           shelvesArray.push(shelf.name[0]);
         });
-        cache.put('shelves-' + userID, shelvesArray, 300000);
+        cache.put('shelves-' + userID, shelvesArray, CACHE_LIFETIME);
         callback(shelvesArray);
       }
     });
@@ -104,7 +105,7 @@ function getAllBooks(userID, shelfName, page, allBooksCallback, allBooks) {
        getAllBooks(userID, shelfName, page + 1, allBooksCallback, allBooks);
       } // if bookList
       else {
-        cache.put('shelf-' + userID + '-' + shelfName, allBooks, 300000);
+        cache.put('shelf-' + userID + '-' + shelfName, allBooks, CACHE_LIFETIME);
         allBooksCallback( '', allBooks);  
       } // else
     }); // getSingleShelf
@@ -123,7 +124,7 @@ app.post('/', ensureAuthenticated, function(req, res) {
   profile.id = req.session.passport.user.id;
   getAllBooks(profile.id, req.body.shelves, 1, function renderOneBook(err, allBooks) {
     justOneBook = {}
-    cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks);
+    cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks, CACHE_LIFETIME);
     justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length))];
     getAllShelves(profile.id, function(allShelves) {
       if (req.body.shelves) { // give priority to data through a POST
@@ -193,10 +194,10 @@ app.get('/', ensureAuthenticated, function(req, res){
         else {
           shelf = 'currently-reading';
         }
-        cache.put('shelves-' +  profile.id, shelvesArray, 300000);
+        cache.put('shelves-' +  profile.id, shelvesArray, CACHE_LIFETIME);
         getAllBooks(profile.id, 'currently-reading', 1, function renderOneBook(err, allBooks) {
           justOneBook = {}
-          cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks);
+          cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks, CACHE_LIFETIME);
           justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length))];
           getAllShelves(profile.id, function(allShelves) {
             if (req.body.shelves) { // give priority to data through a POST
