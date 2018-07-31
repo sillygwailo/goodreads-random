@@ -10,7 +10,6 @@
     "express-session": "1.15.2",
     "body-parser": "1.17.1",
     "cookie-parser": "1.4.3",
-    "goodreads": "harperreed/node-goodreads",
-    "request": "2.85.0"
+    "goodreads": "sillygwailo/node-goodreads"
   }
 }
