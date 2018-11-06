@@ -6,8 +6,6 @@ var passport = require('passport')
   , GoodreadsStrategy = require('passport-goodreads').Strategy
   , goodreads = require('goodreads')
   , cache = require('memory-cache');
-var os = require('os')
-  , util = require('util');
 
 var GOODREADS_KEY = process.env.GOODREADS_KEY;
 var GOODREADS_SECRET = process.env.GOODREADS_SECRET;
@@ -31,7 +29,6 @@ passport.use(new GoodreadsStrategy({
     consumerSecret: GOODREADS_SECRET,
     callbackURL: CALLBACK_URL
   }, function(accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
     process.nextTick(function () {
       return done(null, profile);
     });
@@ -39,8 +36,6 @@ passport.use(new GoodreadsStrategy({
 ));
 
 var app = express();
-
-// app.locals.inspect = require('util').inspect;
 
 // configure Express
 app.set('views', __dirname + '/views');
@@ -111,13 +106,6 @@ function getAllBooks(userID, shelfName, page, allBooksCallback, allBooks) {
     }); // getSingleShelf
  } // else
 }
-
-// http://jsfromhell.com/array/shuffle
-// Not used, might be to mix up the shelves listing
-shuffle = function(v){
-    for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
-    return v;
-};
 
 app.post('/', ensureAuthenticated, function(req, res) {
   var profile = {}
