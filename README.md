@@ -15,3 +15,5 @@ Pick a random book from one of your Goodreads shelves. Useful for deciding which
 Or, just click the button below to deploy to Heroku.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+The `CALLBACK_URL` convig var is optional at build in Heroku. Create a config var in the app's settings after it the build completes and set it to `https://app-name-12345.herokuapp.com/login` (replace `app-name-12345` with the name you or Heroku gave to the app).
