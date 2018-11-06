@@ -10,7 +10,8 @@
         "description": "Goodreads developer secret, available from https://www.goodreads.com/api/keys"
       },
       "CALLBACK_URL": {
-        "description": "Authentication callback URL. Example: http://localhost:5000/auth/goodreads/callback"
+        "description": "Authentication callback URL. Example: http://localhost:5000/auth/goodreads/callback",
+        "required": false
       }
   }
 }
