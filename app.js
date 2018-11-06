@@ -1,5 +1,4 @@
 var express = require('express')
-  , cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
   , session = require('express-session')
 var passport = require('passport')
@@ -40,7 +39,6 @@ var app = express();
 // configure Express
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -49,7 +47,6 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
-app.use(cookieParser('keyboard cat'));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/assets'));
