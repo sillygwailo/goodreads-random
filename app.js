@@ -236,15 +236,15 @@ app.get('/auth/goodreads/callback',
   });
 
 function removePlaceHolderCover(shelf) {
-  if (typeof(shelf.book.image_url) != 'undefined' && shelf.book.image_url[0].indexOf('nophoto') > -1) {
-    delete(shelf.book.image_url);
+  if (typeof(shelf.book) != 'undefined' && typeof(shelf.book.image_url) != 'undefined' && shelf.book.image_url[0].indexOf('nophoto') > -1) {
+      delete(shelf.book.image_url);
   }
   return shelf;
 }
 
 function makeUrlsHTTPS(shelf) {
   shelf.book.link[0] = shelf.book.link[0].replace(/^http:\/\//i, 'https://');
-  if (typeof(shelf.book.image_url) != 'undefined') {
+  if (typeof(shelf.book) != 'undefined' && typeof(shelf.book.image_url) != 'undefined') {
     shelf.book.image_url[0] = shelf.book.image_url[0].replace(/^http:\/\//i, 'https://');
   }
   return shelf;
