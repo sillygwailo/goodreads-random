@@ -89,17 +89,22 @@ function getAllBooks(userID, shelfName, page, allBooksCallback, allBooks) {
       userID: userID
     };
     gr.getSingleShelf(goodreadsQueryOptions, function(json) {
-      bookList = json.GoodreadsResponse.books[0].book;
-      if (typeof(bookList) != 'undefined' && bookList.length > 0) {
-       while (next = bookList.pop()) {
-         allBooks.push(next);
-       }
-       getAllBooks(userID, shelfName, page + 1, allBooksCallback, allBooks);
-      } // if bookList
+      if (typeof(json.GoodreadsResponse.books) != 'undefined') {
+        bookList = json.GoodreadsResponse.books[0].book;
+        if (typeof(bookList) != 'undefined' && bookList.length > 0) {
+         while (next = bookList.pop()) {
+           allBooks.push(next);
+         }
+         getAllBooks(userID, shelfName, page + 1, allBooksCallback, allBooks);
+        } // if bookList
+        else {
+          cache.put('shelf-' + userID + '-' + shelfName, allBooks, CACHE_LIFETIME);
+          allBooksCallback( '', allBooks);
+        } // else
+      }
       else {
-        cache.put('shelf-' + userID + '-' + shelfName, allBooks, CACHE_LIFETIME);
-        allBooksCallback( '', allBooks);  
-      } // else
+        console.log(json.GoodreadsResponse);
+      }
     }); // getSingleShelf
  } // else
 }
