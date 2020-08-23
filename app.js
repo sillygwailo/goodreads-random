@@ -219,7 +219,10 @@ app.get('/account', ensureAuthenticated, function(req, res){
 });
 
 app.get('/login', function(req, res){
-  if (req.isAuthenticated()) {  res.redirect('/') }
+  if (req.isAuthenticated()) {
+    res.redirect('/');
+    return;
+  }
   res.render('login', { user: req.user });
 });
 
