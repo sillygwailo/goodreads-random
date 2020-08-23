@@ -223,11 +223,11 @@ app.get('/login', function(req, res){
     res.redirect('/');
     return;
   }
-  res.render('login', { user: req.user });
+  res.render('login', { user: req.user, page_name: 'home' });
 });
 
 app.get('/about', function(req, res){
-  res.render('about', { user: req.user });
+  res.render('about', { user: req.user, page_name: 'about' });
 });
 
 app.get('/auth/goodreads',
@@ -255,6 +255,7 @@ function makeUrlsHTTPS(shelf) {
   if (typeof(shelf.book) != 'undefined' && typeof(shelf.book.image_url) != 'undefined') {
     shelf.book.image_url[0] = shelf.book.image_url[0].replace(/^http:\/\//i, 'https://');
   }
+  shelf.page_name = 'home';
   return shelf;
 }
 
