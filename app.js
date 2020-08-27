@@ -4,7 +4,8 @@ var express = require('express')
 var passport = require('passport')
   , GoodreadsStrategy = require('passport-goodreads').Strategy
   , goodreads = require('goodreads')
-  , cache = require('memory-cache');
+  , cache = require('memory-cache')
+  , sha1 = require('sha1');
 
 var GOODREADS_KEY = process.env.GOODREADS_KEY;
 var GOODREADS_SECRET = process.env.GOODREADS_SECRET;
@@ -53,7 +54,7 @@ app.use(express.static(__dirname + '/assets'));
 
 function getAllShelves(userID, callback) {
   if (!cache.get('shelves-' + userID)) {
-    console.log('Uncached data for user ID ' + userID);
+    console.log('Uncached data for user ID (SHA-1) ' + sha1(userID));
     var returnShelves = [];     
     gr.getShelves(userID, function(json) {
       if (json) {
@@ -67,7 +68,7 @@ function getAllShelves(userID, callback) {
     });
   }
   else {
-    console.log('Serving cached shelf data for user ID ' + userID);
+    console.log('Serving cached shelf data for user ID (SHA-1) ' + sha1(userID));
     callback(cache.get('shelves-' + userID));
   }
 }
