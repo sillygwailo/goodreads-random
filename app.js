@@ -90,7 +90,7 @@ function getAllBooks(userID, shelfName, page, allBooksCallback, allBooks) {
       userID: userID
     };
     gr.getSingleShelf(goodreadsQueryOptions, function(json) {
-      if (typeof(json.GoodreadsResponse) != undefined && typeof(json.GoodreadsResponse.books) != 'undefined') {
+      if (typeof(json.GoodreadsResponse) != 'undefined' && typeof(json.GoodreadsResponse.books) != 'undefined') {
         bookList = json.GoodreadsResponse.books[0].book;
         if (typeof(bookList) != 'undefined' && bookList.length > 0) {
          while (next = bookList.pop()) {
