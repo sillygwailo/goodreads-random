@@ -252,7 +252,7 @@ function removePlaceHolderCover(shelf) {
 }
 
 function makeUrlsHTTPS(shelf) {
-  if (typeof(shelf.book.link) != 'undefined') {
+  if (typeof(shelf.book) != 'undefined' && typeof(shelf.book.link) != 'undefined') {
     shelf.book.link[0] = shelf.book.link[0].replace(/^http:\/\//i, 'https://');
   }
   if (typeof(shelf.book) != 'undefined' && typeof(shelf.book.image_url) != 'undefined') {
