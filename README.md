@@ -2,6 +2,8 @@
 
 Pick a random book from one of your Goodreads shelves. Useful for deciding which book to read next, or which book in your unread pile to pick up again.
 
+As of December 8th, 2020, [Goodreads no longer issues new API keys](https://help.goodreads.com/s/article/Does-Goodreads-support-the-use-of-APIs). See also the [forum discussion about the Goodreads API deprecation](https://www.goodreads.com/topic/show/21788520-api-deprecation).
+
 # Installation
 
 1. Clone the repository.
