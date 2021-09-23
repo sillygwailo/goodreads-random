@@ -22,6 +22,7 @@ The `CALLBACK_URL` convig var is optional at build in Heroku. Create a config va
 
 # Similar Ideas
 
+* [Does Goodreads have a random book selector?](https://help.goodreads.com/s/article/Does-Goodreads-have-a-random-book-selector)
 * [How Tara used the Goodreads API to pick her next read](https://dev.to/tara/how-i-used-the-goodreads-api-to-pick-my-next-read-2le9)
 * [Pick a Book](https://berniwittmann.github.io/pick-a-book/)
 * [Goodreads random book](https://medium.com/@kjbrazil/goodreads-random-next-book-selection-f6c6b325b273)
