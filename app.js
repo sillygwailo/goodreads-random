@@ -55,7 +55,7 @@ app.use(express.static(__dirname + '/assets'));
 function getAllShelves(userID, callback) {
   if (!cache.get('shelves-' + userID)) {
     console.log('Uncached data for user ID (SHA-1) ' + sha1(userID));
-    var returnShelves = [];     
+    var returnShelves = [];
     gr.getShelves(userID, function(json) {
       if (json) {
         var shelvesArray = [];
@@ -77,7 +77,7 @@ function getAllBooks(userID, shelfName, page, allBooksCallback, allBooks) {
   var allBooks = allBooks || [];
 
   var allBooksCallback = allBooksCallback || function() {};
-  
+
   cachedBooks = cache.get('shelf-' + userID + '-' + shelfName);
   if (cachedBooks) {
     allBooksCallback('', cachedBooks);
@@ -129,11 +129,11 @@ app.post('/', ensureAuthenticated, function(req, res) {
         shelves: allShelves,
         submit: 'Get another book',
         book: justOneBook,
-        user: req.user 
+        user: req.user
       }; // http://en.wikipedia.org/wiki/Post/Redirect/Get
       req.session.redirected = true;
       req.session.shelf = req.body.shelves;
-      res.redirect('/');    
+      res.redirect('/');
     }); // getAllShelves
   }); // getAllBooks
 });
@@ -151,7 +151,7 @@ app.get('/', ensureAuthenticated, function(req, res){
       getAllBooks(profile.id, req.session.book.shelf, 1, function renderOneBook(err, allBooks) {
         differentBook = {}
         differentBook = allBooks[Math.floor(Math.random() * (allBooks.length))];
-        
+
         getAllShelves(profile.id, function(allShelves) {
           if (req.session.shelf) {
             shelf = req.session.shelf;
@@ -164,7 +164,7 @@ app.get('/', ensureAuthenticated, function(req, res){
             shelves: allShelves,
             submit: 'Get another book',
             book: differentBook,
-            user: req.user 
+            user: req.user
           }; // http://en.wikipedia.org/wiki/Post/Redirect/Get
           res.render('book', makeUrlsHTTPS(removePlaceHolderCover(differentBookObj)));
         }); // getAllShelves
@@ -238,7 +238,7 @@ app.get('/auth/goodreads',
     // function will not be called.
   });
 
-app.get('/auth/goodreads/callback', 
+app.get('/auth/goodreads/callback',
   passport.authenticate('goodreads', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
