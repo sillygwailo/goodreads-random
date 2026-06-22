@@ -60,6 +60,7 @@ function getAllShelves(userID, callback) {
   if (!cache.get('shelves-' + userID)) {
     console.log('Uncached data for user ID (SHA-1) ' + sha1(userID));
     var returnShelves = [];
+    console.log('Getting shelves for user ID (SHA-1) ' + sha1(userID));
     gr.getShelves(userID, function(json) {
       if (json) {
         var shelvesArray = [];
@@ -121,6 +122,7 @@ app.post('/', ensureAuthenticated, function(req, res) {
     justOneBook = {}
     cache.put('shelf-' + profile.id + '-' + req.body.shelves, allBooks, CACHE_LIFETIME);
     justOneBook = allBooks[Math.floor(Math.random() * (allBooks.length))];
+    console.log('POST request for shelf ' + req.body.shelves + ' for user ID (SHA-1) ' + sha1(profile.id));
     getAllShelves(profile.id, function(allShelves) {
       if (req.body.shelves) { // give priority to data through a POST
         shelf = req.body.shelves;
@@ -145,7 +147,7 @@ app.post('/', ensureAuthenticated, function(req, res) {
 app.get('/', ensureAuthenticated, function(req, res){
   var profile = {}
   profile.id = req.session.passport.user.id;
-
+  console.log('GET request for user ID (SHA-1) ' + profile.id);
   if (req.session.book) {
     if (req.session.redirected) { // if redirected after a POST
       req.session.redirected = null;
@@ -176,7 +178,9 @@ app.get('/', ensureAuthenticated, function(req, res){
     }
   }
   else { // not redirected from a POST, so get a book from 'currently-reading' shelf and cache the shelves list
+    console.log('No book stored in session, getting a book from the currently-reading shelf and caching shelves for user ID (SHA-1) ' + sha1(profile.id));
     gr.getShelves(profile.id, function(json) {
+      console.log('"gr.getShelves: Getting shelves for user ID (SHA-1) ' + sha1(profile.id));
       if (json) {
         var shelvesArray = [];
         json.GoodreadsResponse.shelves[0].user_shelf.forEach(function (shelf) {
@@ -189,6 +193,7 @@ app.get('/', ensureAuthenticated, function(req, res){
         else {
           shelf = 'currently-reading';
         }
+        console.log('Caching shelves for user ID (SHA-1) ' + sha1(profile.id));
         cache.put('shelves-' +  profile.id, shelvesArray, CACHE_LIFETIME);
         getAllBooks(profile.id, 'currently-reading', 1, function renderOneBook(err, allBooks) {
           justOneBook = {}
@@ -225,6 +230,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 
 app.get('/login', function(req, res){
   if (req.isAuthenticated()) {
+    console.log("Already authenticated, redirecting to home page.");
     res.redirect('/');
     return;
   }
@@ -245,6 +251,7 @@ app.get('/auth/goodreads',
 app.get('/auth/goodreads/callback',
   passport.authenticate('goodreads', { failureRedirect: '/login' }),
   function(req, res) {
+    console.log("Successful authentication for user ID (SHA-1) " + sha1(req.session.passport.user.id));
     res.redirect('/');
   });
 
