@@ -13,5 +13,9 @@
         "description": "Authentication callback URL. Example: http://localhost:5000/auth/goodreads/callback",
         "required": false
       }
+      "USER_AGENT": {
+        "description": "User agent of your app. Example: Goodreads Random / you@example.com / https://github.com/sillygwailo/goodreads-random",
+        "required": false
+      }
   }
 }
