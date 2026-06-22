@@ -10,11 +10,12 @@ var passport = require('passport')
 var GOODREADS_KEY = process.env.GOODREADS_KEY;
 var GOODREADS_SECRET = process.env.GOODREADS_SECRET;
 var CALLBACK_URL = process.env.CALLBACK_URL;
+var USER_AGENT = process.env.USER_AGENT;
 var CACHE_LIFETIME = process.env.CACHE_LIFETIME || 300000;
 
 var port = Number(process.env.PORT || 5000);
 
-var gr = new goodreads.client({ key: GOODREADS_KEY, secret: GOODREADS_SECRET});
+var gr = new goodreads.client({ key: GOODREADS_KEY, secret: GOODREADS_SECRET, user_agent: USER_AGENT});
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -27,7 +28,10 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GoodreadsStrategy({
     consumerKey: GOODREADS_KEY,
     consumerSecret: GOODREADS_SECRET,
-    callbackURL: CALLBACK_URL
+    callbackURL: CALLBACK_URL,
+    customHeaders: {
+      'User-Agent': USER_AGENT
+    }
   }, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
       return done(null, profile);
